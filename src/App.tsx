@@ -1,14 +1,19 @@
 import React from 'react';
-import PostsList from './components/Posts/PostsList';
-import UsersList from './components/Users/UsersList';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from './components/router/Layout';
+import { HomeView } from './views/HomeView';
+import { NotFound } from './views/NotFound';
 
 function App() {
   return (
-    <div>
-      <PostsList />
-      <hr />
-      <UsersList />
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element={ <Layout /> }>
+          <Route index element={ <HomeView /> } />
+          <Route path='*' element={ <NotFound /> } />
+        </Route>        
+      </Routes>
+    </>
   );
 }
 
