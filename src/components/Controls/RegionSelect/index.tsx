@@ -26,7 +26,7 @@ interface ISelectProps {
   ) => void;
 }
 
-const CustomSelect: FC<ISelectProps> = ({
+const RegionSelect: FC<ISelectProps> = ({
   isMulti,
   placeholder,
   isClearable,
@@ -52,4 +52,4 @@ const CustomSelect: FC<ISelectProps> = ({
   );
 };
 
-export { CustomSelect };
+export { RegionSelect };

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
-import { Search } from '../Search';
-import { CustomSelect, ISelectOption } from '../UI/select/CustomSelect';
+import { Search } from './Search';
+import { RegionSelect, ISelectOption } from './RegionSelect';
 import { SControlsWrapper } from './styled-controls';
 
 const options: ISelectOption[] = [
@@ -18,7 +18,7 @@ const Controls: FC = () => {
   return (
     <SControlsWrapper>
       <Search search={search} setSearch={setSearch} />
-      <CustomSelect
+      <RegionSelect
         isMulti={false}
         options={options}
         placeholder='Filter by Region'
