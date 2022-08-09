@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header } from '../UI/header/Header';
-import { MyNavLink } from './MyNavLink';
+import { Header } from '../Header';
+import { Main } from '../Main';
 
 const Layout: FC = () => {
   return (
     <>
       <Header />
-      <main>
+      <Main>
         <Outlet />
-      </main>
+      </Main>
       {/* <footer>Footer</footer> */}
     </>    
   );

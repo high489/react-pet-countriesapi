@@ -19,12 +19,13 @@ export const STitle = styled.a.attrs({
   font-size: var(--fs-sm);
   font-weight: var(--fw-bold);
   text-decoration: none;
+  user-select: none;
 `
 
 export const SThemeSwitcher = styled.div`
-color: var(--color-text);
-font-size: var(--fs-sm);
-//font-weight: var(--fw-bold);
-text-transform: capitalize;
-cursor: pointer;
+  color: var(--color-text);
+  font-size: var(--fs-sm);
+  text-transform: capitalize;
+  user-select: none;
+  cursor: pointer;
 `

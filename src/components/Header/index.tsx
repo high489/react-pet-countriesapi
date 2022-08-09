@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { IoMoon, IoMoonOutline } from 'react-icons/io5';
 
-import { SContainer } from '../container/SContainer';
+import { SContainer } from '../container/SContainer'
 import { SHeader, SHeaderWrapper, STitle, SThemeSwitcher } from './styled-header';
 
 const Header: FC = () => {
