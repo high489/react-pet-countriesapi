@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 
 import { IoSearch } from 'react-icons/io5'
 import { SInputContainer, SSearchInput } from './styled-search';

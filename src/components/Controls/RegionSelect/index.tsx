@@ -4,7 +4,7 @@ import {
   MultiValue,
   SingleValue,
 } from "react-select";
-import { StyledSelect } from './styled-custom-select';
+import { StyledSelect } from './styled-region-select';
 
 export interface ISelectOption {
   value: string;

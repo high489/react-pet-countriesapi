@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from './components/router/Layout';
-import { HomeView } from './views/HomeView';
-import { NotFound } from './views/NotFound';
+import Layout from './components/router/Layout';
+import HomeView from './views/HomeView';
+import NotFound from './views/NotFound';
 
 function App() {
   return (

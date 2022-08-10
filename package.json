@@ -1,5 +1,5 @@
 {
-  "name": "react-redux-ts-flagsapi-pet",
+  "name": "react-pet-flagsapi",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

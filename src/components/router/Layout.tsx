@@ -15,4 +15,4 @@ const Layout: FC = () => {
   );
 };
 
-export { Layout };
+export default Layout;
