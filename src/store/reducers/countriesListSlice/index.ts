@@ -3,7 +3,7 @@ import { ICountry } from '../../../models/countries';
 import { isError } from '../isError';
 import { fetchAllCountries } from './actionCreators';
 
-interface CountriesListState {
+export interface CountriesListState {
   data: ICountry[];
   loading: boolean;
   error: string | null;

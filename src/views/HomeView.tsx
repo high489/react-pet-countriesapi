@@ -1,23 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { useAppDispatch ,useAppSelector } from '../hooks/redux';
-import { fetchAllCountries } from '../store/reducers/countriesListSlice/actionCreators';
-import { fetchCountryByName } from '../store/reducers/countrySlice/actionCreators';
+import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Controls } from '../components/Controls';
+import { CountriesList } from '../components/Countries/CountriesList';
+import { CountryCard } from '../components/Countries/CountryCard';
+import { ICountry, ICountryInfo } from '../models/countries';
 
-const HomeView = () => {
-  const dispatch = useAppDispatch()
-  const { data: country } = useAppSelector(state => state.country)
+interface HomeViewProps {
+  countries: ICountry[];
+  areCountriesLoading: boolean;
+  countriesLoadingError: string | null;
+}
 
-  useEffect(() => {
-    dispatch(fetchCountryByName('Finland'))
-  }, [dispatch])
+const HomeView: FC<HomeViewProps> = ({
+  countries,
+  areCountriesLoading,
+  countriesLoadingError
+}) => {
+  
+  const navigate = useNavigate()
 
-  console.log(country)
+  console.log(countries)
 
   return (
     <>
      <Controls />
+     <CountriesList>
+      {areCountriesLoading && <section>Countries are loading...</section>}
+      {countriesLoadingError && <section>Countries loading error</section>}
+      {countries.map((c) => {
+        const countryInfo: ICountryInfo = {
+          img: c.flags.png,
+          name: c.name,
+          info: [
+            {
+              title: 'Population',
+              description: c.population.toLocaleString(),
+            },
+            {
+              title: 'Region',
+              description: c.region,
+            },
+            {
+              title: 'Capital',
+              description: c.capital,
+            },
+          ],
+        }
+        return (
+          <CountryCard
+            key={c.name}
+            {...countryInfo}
+            onClick={() => navigate(`/country/${c.name}`)}
+          />
+        )
+      })}
+     </CountriesList>
     </>
   );
 };

@@ -8,7 +8,9 @@ export const fetchAllCountries =
   'countries/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(BASE_URL + 'all')
+      const response = await axios.get(BASE_URL + 'all', {
+        params: {fields: 'name,capital,flags,population,region'}
+      })
       return response.data
     } catch (e) {
       return rejectWithValue("Failed to load countries data")

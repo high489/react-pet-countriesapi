@@ -139,3 +139,14 @@ export interface ICountry {
   pt:  string;
  }
  
+ interface ICountryInfoItem {
+  title: string;
+  description?: string;
+ }
+
+ export interface ICountryInfo {
+  img: string;
+  name: string;
+  info: ICountryInfoItem[];
+ }
+
