@@ -22,7 +22,8 @@ const HomeView: FC<HomeViewProps> = ({
   const [filteredCountries, setFilteredCountries] = useState(countries)
 
   useEffect(() => {
-    setFilteredCountries(countries)
+    if (!areCountriesLoading)
+      setFilteredCountries(countries)
   }, [countries])
 
   const handleSearch = (search?: string, region?: any) => {
@@ -43,35 +44,36 @@ const HomeView: FC<HomeViewProps> = ({
     <>
      <Controls onSearch={handleSearch} />
      <CountriesList>
-      {areCountriesLoading && <section>Countries are loading...</section>}
-      {countriesLoadingError && <section>Countries loading error</section>}
-      {filteredCountries.map((c) => {
-        const countryInfo: ICountryInfo = {
-          img: c.flags.png,
-          name: c.name,
-          info: [
-            {
-              title: 'Population',
-              description: c.population.toLocaleString(),
-            },
-            {
-              title: 'Region',
-              description: c.region,
-            },
-            {
-              title: 'Capital',
-              description: c.capital,
-            },
-          ],
-        }
-        return (
-          <CountryCard
-            key={c.name}
-            {...countryInfo}
-            onClick={() => navigate(`/country/${c.name}`)}
-          />
-        )
-      })}
+      {areCountriesLoading 
+      ? <div>Countries are loading...</div>
+      : filteredCountries.map((c) => {
+          const countryInfo: ICountryInfo = {
+            img: c.flags.png,
+            name: c.name,
+            info: [
+              {
+                title: 'Population',
+                description: c.population.toLocaleString(),
+              },
+              {
+                title: 'Region',
+                description: c.region,
+              },
+              {
+                title: 'Capital',
+                description: c.capital,
+              },
+            ],
+          }
+          return (
+            <CountryCard
+              key={c.name}
+              {...countryInfo}
+              onClick={() => navigate(`/country/${c.name}`)}
+            />
+          )
+        })}
+      {countriesLoadingError && <div>Countries loading error</div>}
      </CountriesList>
     </>
   );

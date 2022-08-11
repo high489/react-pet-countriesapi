@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SCountryCardWrapper = styled.article`
+export const SCardWrapper = styled.article`
   border-radius: var(--radius);
   background-color: var(--colors-ui-base);
   box-shadow: var(--shadow);
@@ -8,7 +8,7 @@ export const SCountryCardWrapper = styled.article`
   overflow: hidden;
 `;
 
-export const SCardImage = styled.img`
+export const SImage = styled.img`
   display: block;
   width: 100%;
   height: 150px;
@@ -17,23 +17,23 @@ export const SCardImage = styled.img`
   box-shadow: var(--shadow);
 `;
 
-export const SCardBody = styled.div`
+export const SBody = styled.div`
   padding: 1rem 1.5rem 2rem;
 `;
 
-export const SCardTitle = styled.h3`
+export const STitle = styled.h3`
   margin: 0;
   font-size: var(--fs-md);
   font-weight: var(--fw-bold);
 `;
 
-export const SCardList = styled.ul`
+export const SList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 1rem 0 0;
 `;
 
-export const SCardListItem = styled.li`
+export const SListItem = styled.li`
   font-size: var(--fs-sm);
   line-height: 1.5;
   font-weight: var(--fw-light);

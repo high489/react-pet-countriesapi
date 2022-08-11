@@ -1,31 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICountry } from '../../../models/countries';
+import { ICountriesState } from '../../../models/countries';
 import { isError } from '../isError';
-import { fetchAllCountries } from './actionCreators';
+import { fetchCountriesByCodes } from './actionCreators';
 
-export interface CountriesListState {
-  data: ICountry[];
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: CountriesListState = {
+const initialState: ICountriesState = {
   data: [],
   loading: false,
   error: null,
 }
 
-const countriesSlice = createSlice({
-  name: 'countries',
+const countriesByCodesSlice = createSlice({
+  name: 'countriesByCodes',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllCountries.pending, (state) => {
+      .addCase(fetchCountriesByCodes.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(fetchAllCountries.fulfilled, (state, action) => {
+      .addCase(fetchCountriesByCodes.fulfilled, (state, action) => {
         state.data = action.payload
         state.loading = false
       })
@@ -36,4 +30,4 @@ const countriesSlice = createSlice({
   },
 })
 
-export default countriesSlice.reducer;
+export default countriesByCodesSlice.reducer;

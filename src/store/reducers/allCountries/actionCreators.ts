@@ -5,7 +5,7 @@ import { BASE_URL } from '../../config';
 
 export const fetchAllCountries = 
   createAsyncThunk<ICountry[], undefined, { rejectValue: string }>(
-  'countries/fetchAll',
+  'allCountries/fetchAllCountries',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(BASE_URL + 'all', {

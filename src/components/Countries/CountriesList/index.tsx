@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { SCountriesListWrapper } from './styled-countries-list';
+import { SListWrapper } from './styled-countries-list';
 
 interface CountriesListProps {
   children: React.ReactNode;
@@ -7,9 +7,9 @@ interface CountriesListProps {
 
 const CountriesList: FC<CountriesListProps> = ({children}) => {
   return (
-    <SCountriesListWrapper>
+    <SListWrapper>
       {children}
-    </SCountriesListWrapper>
+    </SListWrapper>
   );
 };
 

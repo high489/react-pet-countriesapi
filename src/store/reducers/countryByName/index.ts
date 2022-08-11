@@ -15,8 +15,8 @@ const initialState: CountryState = {
   error: null,
 }
 
-const countrySlice = createSlice({
-  name: 'country',
+const countryByNameSlice = createSlice({
+  name: 'countryByName',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -36,4 +36,4 @@ const countrySlice = createSlice({
   },
 })
 
-export default countrySlice.reducer;
+export default countryByNameSlice.reducer;

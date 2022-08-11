@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ICountryInfo } from '../../../models/countries';
-import { SCardBody, SCardImage, SCardList, SCardListItem, SCardTitle, SCountryCardWrapper } from './styled-country-card';
+import { SBody, SImage, SList, SListItem, STitle, SCardWrapper } from './styled-country-card';
 
 interface CountryCardProps extends ICountryInfo {
   onClick: () => void;
@@ -9,19 +9,19 @@ interface CountryCardProps extends ICountryInfo {
 const CountryCard: FC<CountryCardProps> = ({img, name, info = [], onClick}) => {
 
   return (
-    <SCountryCardWrapper onClick={onClick}>
-      <SCardImage src={img} alt={name}/>
-      <SCardBody>
-        <SCardTitle>{name}</SCardTitle>
-        <SCardList>
+    <SCardWrapper onClick={onClick}>
+      <SImage src={img} alt={name}/>
+      <SBody>
+        <STitle>{name}</STitle>
+        <SList>
           {info.map(el => (
-            <SCardListItem key={el.title}>
+            <SListItem key={el.title}>
               <b>{el.title}:</b> {el.description}
-            </SCardListItem>
+            </SListItem>
           ))}
-        </SCardList>
-      </SCardBody>
-    </SCountryCardWrapper>
+        </SList>
+      </SBody>
+    </SCardWrapper>
   );
 };
 

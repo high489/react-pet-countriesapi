@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useAppDispatch ,useAppSelector } from './hooks/redux';
-import { fetchAllCountries } from './store/reducers/countriesListSlice/actionCreators';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+import { fetchAllCountries } from './store/reducers/allCountries/actionCreators';
 
 import Layout from './components/router/Layout';
 import HomeView from './views/HomeView';
@@ -15,7 +15,7 @@ function App() {
     data: countries,
     loading: areCountriesLoading,
     error: countriesLoadingError,
-  } = useAppSelector(state => state.countries)
+  } = useAppSelector(state => state.allCountries)
 
   useEffect(() => {
     dispatch(fetchAllCountries())

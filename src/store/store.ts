@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import countriesReducer from './reducers/countriesListSlice';
-import countryReduser from './reducers/countrySlice'
+import allCountriesReducer from './reducers/allCountries';
+import countriesByCodesReducer from './reducers/countriesByCodes';
+import countryByNameReduser from './reducers/countryByName';
 
 export const store = configureStore({
   reducer: {
-    countries: countriesReducer,
-    country: countryReduser,
+    allCountries: allCountriesReducer,
+    countriesByCodes: countriesByCodesReducer,
+    country: countryByNameReduser,
   },
 });
 

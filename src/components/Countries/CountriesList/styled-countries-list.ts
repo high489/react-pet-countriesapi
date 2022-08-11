@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SCountriesListWrapper = styled.section`
+export const SListWrapper = styled.section`
   width: 100%;
   padding: 2rem 0;
 

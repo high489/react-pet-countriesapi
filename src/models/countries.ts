@@ -138,6 +138,12 @@ export interface ICountry {
   nl:  string;
   pt:  string;
  }
+
+ export interface ICountriesState {
+  data: ICountry[];
+  loading: boolean;
+  error: string | null;
+}
  
  interface ICountryInfoItem {
   title: string;
@@ -149,4 +155,3 @@ export interface ICountry {
   name: string;
   info: ICountryInfoItem[];
  }
-
