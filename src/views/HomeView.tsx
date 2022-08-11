@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Controls } from '../components/Controls';
@@ -17,18 +17,35 @@ const HomeView: FC<HomeViewProps> = ({
   areCountriesLoading,
   countriesLoadingError
 }) => {
-  
   const navigate = useNavigate()
 
-  console.log(countries)
+  const [filteredCountries, setFilteredCountries] = useState(countries)
+
+  useEffect(() => {
+    setFilteredCountries(countries)
+  }, [countries])
+
+  const handleSearch = (search?: string, region?: any) => {
+    let data = [...countries]
+
+    const regionValue = region?.value || ''    
+    
+    if (regionValue) {
+      data = data.filter(c => c.region.includes(regionValue))
+    }
+    if (search) {
+      data = data.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+    }
+    setFilteredCountries(data)
+  }
 
   return (
     <>
-     <Controls />
+     <Controls onSearch={handleSearch} />
      <CountriesList>
       {areCountriesLoading && <section>Countries are loading...</section>}
       {countriesLoadingError && <section>Countries loading error</section>}
-      {countries.map((c) => {
+      {filteredCountries.map((c) => {
         const countryInfo: ICountryInfo = {
           img: c.flags.png,
           name: c.name,
