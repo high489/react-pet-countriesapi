@@ -80,7 +80,7 @@ const CountryDetails: FC<CountryDetailsProps> = ({
         </SListGroup>
         <SMeta>
           <b>Border Countries</b>
-          {areNeighboursLoading 
+          {(areNeighboursLoading || borders.length !== neighboursNames.length)
           ? <span>Border countries are loading...</span>
           : !borders.length
             ? <span>There is no border countries</span>

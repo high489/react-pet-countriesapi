@@ -29,7 +29,7 @@ const DetailsView = () => {
   }, [dispatch, name])
 
   useEffect(() => {
-    if(country.borders?.values || isCountryLoading) {
+    if(name === country.name) {
       dispatch(fetchCountriesByCodes(country.borders))
     }
   }, [dispatch, country])
