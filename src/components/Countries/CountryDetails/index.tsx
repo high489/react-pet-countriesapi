@@ -1,10 +1,20 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { fetchCountriesByCodes } from '../../../store/reducers/countriesByCodes/actionCreators';
 import { ICountry } from '../../../models/countries';
-import { SDetailsWrapper, SImage, SList, SListGroup, SListItem, SMeta, STag, STagGroup, STitle } from './styled-country-details';
+import { 
+  SDetailsWrapper, 
+  SImage, 
+  SList, 
+  SListGroup, 
+  SListItem, 
+  SMeta, 
+  STag, 
+  STagGroup, 
+  STitle } from './styled-country-details';
 
 interface CountryDetailsProps extends ICountry {
+  neighbours: ICountry[];
+  areNeighboursLoading: boolean;
+  neighboursLoadingError: string | null;
   navigate: (value: string) => void;
 }
 
@@ -20,21 +30,18 @@ const CountryDetails: FC<CountryDetailsProps> = ({
   currencies = [],
   languages = [],
   borders = [],
+  neighbours,
+  areNeighboursLoading,
+  neighboursLoadingError,
   navigate,
 }) => {
-  const dispatch = useAppDispatch()
-  const [neighbours, setNeighbours] = useState([] as string[])
-
-  const {data, loading} = useAppSelector(state => state.countriesByCodes)
+  const [neighboursNames, setNeighboursNames] = useState([] as string[])
 
   useEffect(() => {
-    dispatch(fetchCountriesByCodes(borders))
-    if (!loading)
-      setNeighbours(data.map(c => c.name))
-  }, [dispatch, borders])
-
-  console.log(neighbours);
-  
+    if(neighbours.length !== 0) {
+      setNeighboursNames(neighbours.map(n => n.name))
+    }
+  }, [neighbours])
 
   return (
     <SDetailsWrapper>
@@ -73,13 +80,16 @@ const CountryDetails: FC<CountryDetailsProps> = ({
         </SListGroup>
         <SMeta>
           <b>Border Countries</b>
-          {!borders.length
-          ? <span>There is no border countries</span>
-          : <STagGroup>
-              {neighbours.map((n) => (
-                <STag key={n} onClick={() => navigate(`/country/${n}`)}>{n}</STag>
-              ))}
-            </STagGroup>}
+          {areNeighboursLoading 
+          ? <span>Border countries are loading...</span>
+          : !borders.length
+            ? <span>There is no border countries</span>
+            : <STagGroup>
+                {neighboursNames.map((n) => (
+                  <STag key={n} onClick={() => navigate(`/country/${n}`)}>{n}</STag>
+                ))}
+              </STagGroup>
+          }
         </SMeta>
       </div>
     </SDetailsWrapper>

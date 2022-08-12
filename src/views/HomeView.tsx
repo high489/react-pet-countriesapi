@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../hooks/redux';
+import { fetchAllCountries } from '../store/reducers/allCountries/actionCreators';
 
 import { Controls } from '../components/Controls';
 import { CountriesList } from '../components/Countries/CountriesList';
@@ -7,27 +9,31 @@ import { CountryCard } from '../components/Countries/CountryCard';
 import { ICountry, ICountryInfo } from '../models/countries';
 
 interface HomeViewProps {
-  countries: ICountry[];
-  areCountriesLoading: boolean;
-  countriesLoadingError: string | null;
+  allCountries: ICountry[];
+  areAllCountriesLoading: boolean;
+  allCountriesLoadingError: string | null;
 }
 
 const HomeView: FC<HomeViewProps> = ({
-  countries,
-  areCountriesLoading,
-  countriesLoadingError
+  allCountries,
+  areAllCountriesLoading,
+  allCountriesLoadingError,
 }) => {
+  const [filteredCountries, setFilteredCountries] = useState(allCountries)
+  
   const navigate = useNavigate()
-
-  const [filteredCountries, setFilteredCountries] = useState(countries)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!areCountriesLoading)
-      setFilteredCountries(countries)
-  }, [countries])
+    dispatch(fetchAllCountries())
+  }, [dispatch])
+
+  useEffect(() => {
+    setFilteredCountries(allCountries)
+  }, [allCountries])
 
   const handleSearch = (search?: string, region?: any) => {
-    let data = [...countries]
+    let data = [...allCountries]
 
     const regionValue = region?.value || ''    
     
@@ -44,9 +50,9 @@ const HomeView: FC<HomeViewProps> = ({
     <>
      <Controls onSearch={handleSearch} />
      <CountriesList>
-      {areCountriesLoading 
-      ? <div>Countries are loading...</div>
-      : filteredCountries.map((c) => {
+      {areAllCountriesLoading && <div>Countries are loading...</div>}
+      {allCountriesLoadingError && <div>Countries loading error</div>}
+      {filteredCountries.map((c) => {
           const countryInfo: ICountryInfo = {
             img: c.flags.png,
             name: c.name,
@@ -73,7 +79,6 @@ const HomeView: FC<HomeViewProps> = ({
             />
           )
         })}
-      {countriesLoadingError && <div>Countries loading error</div>}
      </CountriesList>
     </>
   );

@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { fetchCountryByName } from '../store/reducers/countryByName/actionCreators';
+import { fetchCountriesByCodes } from '../store/reducers/countriesByCodes/actionCreators';
 import { MyButton } from '../components/UI';
 import { IoArrowBack } from 'react-icons/io5';
 import CountryDetails from '../components/Countries/CountryDetails';
-
 
 const DetailsView = () => {
   const { name } = useParams();
@@ -18,9 +18,21 @@ const DetailsView = () => {
     error: countryLoadingError,
   } = useAppSelector(state => state.country)
 
+  const {
+    data: neighbours,
+    loading: areNeighboursLoading,
+    error: neighboursLoadingError
+  } = useAppSelector(state => state.countriesByCodes)
+
   useEffect(() => {
     dispatch(fetchCountryByName(name))
-  }, [dispatch, name])  
+  }, [dispatch, name])
+
+  useEffect(() => {
+    if(country.borders?.values || isCountryLoading) {
+      dispatch(fetchCountriesByCodes(country.borders))
+    }
+  }, [dispatch, country])
 
   return (
     <>
@@ -29,7 +41,12 @@ const DetailsView = () => {
       </MyButton>
       {isCountryLoading
       ? <div>Country is loading...</div>
-      : <CountryDetails {...country} navigate={navigate} />}
+      : <CountryDetails
+        {...country}
+        neighbours={neighbours}
+        areNeighboursLoading={areNeighboursLoading}
+        neighboursLoadingError={neighboursLoadingError}
+        navigate={navigate} />}
       {countryLoadingError && <div>Country loading error</div>}
     </>
   );
