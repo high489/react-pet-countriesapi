@@ -144,6 +144,12 @@ export interface ICountry {
   loading: boolean;
   error: string | null;
 }
+
+export interface ICountryState {
+  data: ICountry;
+  loading: boolean;
+  error: string | null;
+}
  
  interface ICountryInfoItem {
   title: string;

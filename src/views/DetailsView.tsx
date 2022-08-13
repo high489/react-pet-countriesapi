@@ -32,11 +32,11 @@ const DetailsView = () => {
     if(name === country.name) {
       dispatch(fetchCountriesByCodes(country.borders))
     }
-  }, [dispatch, country])
+  }, [dispatch, name, country])
 
   return (
     <>
-      <MyButton onClick={() => navigate('/')}>
+      <MyButton onClick={() => navigate(-1)}>
         <IoArrowBack /> Back
       </MyButton>
       {isCountryLoading

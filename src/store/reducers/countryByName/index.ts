@@ -1,15 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICountry } from '../../../models/countries';
+import { ICountry, ICountryState } from '../../../models/countries';
 import { isError } from '../isError';
 import { fetchCountryByName } from './actionCreators';
 
-interface CountryState {
-  data: ICountry;
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: CountryState = {
+const initialState: ICountryState = {
   data: {} as ICountry,
   loading: false,
   error: null,
