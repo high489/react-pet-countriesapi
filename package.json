@@ -1,5 +1,5 @@
 {
-  "name": "react-pet-flagsapi",
+  "name": "react-pet-countriesapi",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -48,8 +48,6 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.25",
-    "concurrently": "^7.3.0",
-    "json-server": "^0.17.0"
+    "@types/styled-components": "^5.1.25"
   }
 }
