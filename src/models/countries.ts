@@ -146,9 +146,12 @@ export interface ICountriesState {
 }
 
 export interface ICountryState {
-  data: ICountry;
-  loading: boolean;
-  error: string | null;
+  country: ICountry;
+  isCountryLoading: boolean;
+  countryError: string | null | undefined;
+  neighbours: ICountry[];
+  areNeighboursLoading: boolean;
+  neighboursError: string | null | undefined;
 }
  
  interface ICountryInfoItem {

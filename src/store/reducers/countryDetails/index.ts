@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICountry } from '../../../models/countries';
+import { ICountry, ICountryState } from '../../../models/countries';
 import { fetchCountryByName, fetchNeighboursByCodes } from './action-creators';
-
-interface ICountryState {
-  country: ICountry;
-  isCountryLoading: boolean;
-  countryError: string | null | undefined;
-  neighbours: ICountry[];
-  areNeighboursLoading: boolean;
-  neighboursError: string | null | undefined;
-}
 
 const initialState: ICountryState = {
   country: {} as ICountry,
