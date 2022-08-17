@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useAppSelector } from './hooks/redux';
+import { selectAllCountries } from './store/selectors';
 
 import Layout from './components/router/Layout';
 import HomeView from './views/HomeView';
@@ -12,7 +13,7 @@ function App() {
     data: allCountries,
     loading: areAllCountriesLoading,
     error: allCountriesLoadingError,
-  } = useAppSelector(state => state.allCountries)
+  } = useAppSelector(selectAllCountries)
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/redux';
-import { fetchAllCountries } from '../store/reducers/allCountries/actionCreators';
+import { fetchAllCountries } from '../store/reducers/allCountries/action-creators';
 
 import { Controls } from '../components/Controls';
 import { CountriesList } from '../components/Countries/CountriesList';

@@ -1,11 +1,2 @@
-import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from './store';
-
-export const selectAllCountries = (state: RootState) => state.allCountries;
-
-export const allCoutriesSelector = createSelector(
-  selectAllCountries,
-  (allCountries) => {
-    return allCountries
-  }
-) 
+export * from './reducers/allCountries/selectors';
+export * from './reducers/countryDetails/selectors';

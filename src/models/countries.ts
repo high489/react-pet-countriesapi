@@ -139,7 +139,7 @@ export interface ICountry {
   pt:  string;
  }
 
- export interface ICountriesState {
+export interface ICountriesState {
   data: ICountry[];
   loading: boolean;
   error: string | null;

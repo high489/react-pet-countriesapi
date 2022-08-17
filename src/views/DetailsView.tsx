@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import { fetchCountryByName } from '../store/reducers/countryByName/actionCreators';
-import { fetchCountriesByCodes } from '../store/reducers/countriesByCodes/actionCreators';
+import { fetchCountryByName } from '../store/reducers/countryDetails/action-creators';
 import { MyButton } from '../components/UI';
 import { IoArrowBack } from 'react-icons/io5';
-import CountryDetails from '../components/Countries/CountryDetails';
+import { CountryDetails } from '../components/Countries/CountryDetails';
+import { selectCountryDetails } from '../store/selectors';
 
 const DetailsView = () => {
   const { name } = useParams();
@@ -13,26 +13,14 @@ const DetailsView = () => {
   const dispatch = useAppDispatch()
 
   const {
-    data: country,
-    loading: isCountryLoading,
-    error: countryLoadingError,
-  } = useAppSelector(state => state.country)
-
-  const {
-    data: neighbours,
-    loading: areNeighboursLoading,
-    error: neighboursLoadingError
-  } = useAppSelector(state => state.countriesByCodes)
+    country,
+    isCountryLoading,
+    countryError,
+  } = useAppSelector(selectCountryDetails)
 
   useEffect(() => {
     dispatch(fetchCountryByName(name))
   }, [dispatch, name])
-
-  useEffect(() => {
-    if(name === country.name) {
-      dispatch(fetchCountriesByCodes(country.borders))
-    }
-  }, [dispatch, name, country])
 
   return (
     <>
@@ -43,11 +31,8 @@ const DetailsView = () => {
       ? <div>Country is loading...</div>
       : <CountryDetails
         {...country}
-        neighbours={neighbours}
-        areNeighboursLoading={areNeighboursLoading}
-        neighboursLoadingError={neighboursLoadingError}
         navigate={navigate} />}
-      {countryLoadingError && <div>Country loading error</div>}
+      {countryError && <div>Country loading error</div>}
     </>
   );
 };

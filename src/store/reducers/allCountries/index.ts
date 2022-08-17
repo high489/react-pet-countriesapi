@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICountriesState } from '../../../models/countries';
 import { isError } from '../isError';
-import { fetchAllCountries } from './actionCreators';
+import { fetchAllCountries } from './action-creators';
 
 const initialState: ICountriesState = {
   data: [],

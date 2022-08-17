@@ -1,5 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ICountry } from '../../../models/countries';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { fetchNeighboursByCodes } from '../../../store/reducers/countryDetails/action-creators';
+import { selectCountryNeighbours } from '../../../store/selectors';
 import { 
   SDetailsWrapper, 
   SImage, 
@@ -12,9 +15,8 @@ import {
   STitle } from './styled-country-details';
 
 interface CountryDetailsProps extends ICountry {
-  neighbours: ICountry[];
-  areNeighboursLoading: boolean;
-  neighboursLoadingError: string | null;
+  isCountryLoading?: boolean;
+  countryError?: string | null | undefined;
   navigate: (value: string) => void;
 }
 
@@ -30,17 +32,28 @@ const CountryDetails: FC<CountryDetailsProps> = ({
   currencies = [],
   languages = [],
   borders = [],
-  neighbours,
-  areNeighboursLoading,
-  neighboursLoadingError,
   navigate,
 }) => {
+  const dispatch = useAppDispatch()
+  
+  const {
+    neighbours,
+    areNeighboursLoading,
+    neighboursError,
+  } = useAppSelector(selectCountryNeighbours)
+
   const [neighboursNames, setNeighboursNames] = useState([] as string[])
 
   useEffect(() => {
-    if(neighbours.length !== 0) {
+    if (borders.length !== 0) {
+      dispatch(fetchNeighboursByCodes(borders))
+    }    
+  }, [dispatch, borders])
+
+  useEffect(() => {
+    if (neighbours.length !== 0) {
       setNeighboursNames(neighbours.map(n => n.name))
-    }
+    }    
   }, [neighbours])
 
   return (
@@ -80,7 +93,7 @@ const CountryDetails: FC<CountryDetailsProps> = ({
         </SListGroup>
         <SMeta>
           <b>Border Countries</b>
-          {(areNeighboursLoading || borders.length !== neighboursNames.length)
+          {(areNeighboursLoading || neighbours.length !== neighboursNames.length)
           ? <span>Border countries are loading...</span>
           : !borders.length
             ? <span>There is no border countries</span>
@@ -90,10 +103,11 @@ const CountryDetails: FC<CountryDetailsProps> = ({
                 ))}
               </STagGroup>
           }
+          {neighboursError && <div>Border countries loading error</div>}
         </SMeta>
       </div>
     </SDetailsWrapper>
   );
 };
 
-export default CountryDetails;
+export {CountryDetails};
