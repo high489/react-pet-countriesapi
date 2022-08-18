@@ -8,6 +8,7 @@ import { resetToInitialState } from '../store/reducers/countryDetails';
 
 import { MyButton } from '../components/UI';
 import { IoArrowBack } from 'react-icons/io5';
+import { Loader } from '../components/UI/Loader';
 import { CountryDetails } from '../components/Countries/CountryDetails';
 
 const DetailsView = () => {
@@ -35,7 +36,7 @@ const DetailsView = () => {
         <IoArrowBack /> Back
       </MyButton>
       {isCountryLoading
-      ? <div>Country is loading...</div>
+      ? <Loader />
       : <CountryDetails
         {...country}
         navigate={navigate} />}

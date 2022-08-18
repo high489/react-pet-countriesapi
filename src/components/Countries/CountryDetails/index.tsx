@@ -13,6 +13,7 @@ import {
   STag, 
   STagGroup, 
   STitle } from './styled-country-details';
+import { Loader } from '../../UI/Loader';
 
 interface CountryDetailsProps extends ICountry {
   isCountryLoading?: boolean;
@@ -47,7 +48,8 @@ const CountryDetails: FC<CountryDetailsProps> = ({
   useEffect(() => {
     if (!areNeighboursLoading && !neighboursError) {
       dispatch(fetchNeighboursByCodes(borders))
-    }  
+    }
+    // eslint-disable-next-line
   }, [dispatch, borders])
 
   useEffect(() => {
@@ -94,7 +96,7 @@ const CountryDetails: FC<CountryDetailsProps> = ({
         <SMeta>
           <b>Border Countries</b>
           {(areNeighboursLoading || neighbours.length !== neighboursNames.length)
-          ? <span>Border countries are loading...</span>
+          ? <Loader />
           : neighboursError
             ? <span>There is no border countries</span>
             : <STagGroup>

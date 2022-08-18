@@ -5,6 +5,7 @@ import { fetchAllCountries } from '../store/reducers/allCountries/action-creator
 
 import { Controls } from '../components/Controls';
 import { CountriesList } from '../components/Countries/CountriesList';
+import { Loader } from '../components/UI/Loader';
 import { CountryCard } from '../components/Countries/CountryCard';
 import { ICountry, ICountryInfo } from '../models/countries';
 
@@ -50,9 +51,9 @@ const HomeView: FC<HomeViewProps> = ({
     <>
      <Controls onSearch={handleSearch} />
      <CountriesList>
-      {areAllCountriesLoading && <div>Countries are loading...</div>}
-      {allCountriesLoadingError && <div>Countries loading error</div>}
-      {filteredCountries.map((c) => {
+      {areAllCountriesLoading 
+      ? <Loader />
+      : filteredCountries.map((c) => {
           const countryInfo: ICountryInfo = {
             img: c.flags.png,
             name: c.name,
@@ -79,6 +80,7 @@ const HomeView: FC<HomeViewProps> = ({
             />
           )
         })}
+      {allCountriesLoadingError && <div>Countries loading error</div>}
      </CountriesList>
     </>
   );
