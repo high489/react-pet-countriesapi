@@ -45,9 +45,9 @@ const CountryDetails: FC<CountryDetailsProps> = ({
   const [neighboursNames, setNeighboursNames] = useState([] as string[])
 
   useEffect(() => {
-    if (borders.length !== 0) {
+    if (!areNeighboursLoading && !neighboursError) {
       dispatch(fetchNeighboursByCodes(borders))
-    }    
+    }  
   }, [dispatch, borders])
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const CountryDetails: FC<CountryDetailsProps> = ({
           <b>Border Countries</b>
           {(areNeighboursLoading || neighbours.length !== neighboursNames.length)
           ? <span>Border countries are loading...</span>
-          : !borders.length
+          : neighboursError
             ? <span>There is no border countries</span>
             : <STagGroup>
                 {neighboursNames.map((n) => (
@@ -103,7 +103,6 @@ const CountryDetails: FC<CountryDetailsProps> = ({
                 ))}
               </STagGroup>
           }
-          {neighboursError && <div>Border countries loading error</div>}
         </SMeta>
       </div>
     </SDetailsWrapper>

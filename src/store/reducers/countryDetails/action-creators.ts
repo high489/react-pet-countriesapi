@@ -21,8 +21,9 @@ export const fetchNeighboursByCodes =
   'countryDetails/fetchNeighboursByCodes',
   async (codes, { rejectWithValue }) => {
     try {
-      const response = await axios.get(BASE_URL + 'alpha', {
-        params: {codes: codes?.join(',')},
+      const response = await axios.get('alpha', {
+        baseURL: BASE_URL,
+        params: {codes: codes?.join(',')},        
       })
 
       return response.data

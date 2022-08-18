@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
+
 import { fetchCountryByName } from '../store/reducers/countryDetails/action-creators';
+import { selectCountryDetails } from '../store/selectors';
+import { resetToInitialState } from '../store/reducers/countryDetails';
+
 import { MyButton } from '../components/UI';
 import { IoArrowBack } from 'react-icons/io5';
 import { CountryDetails } from '../components/Countries/CountryDetails';
-import { selectCountryDetails } from '../store/selectors';
 
 const DetailsView = () => {
   const { name } = useParams();
@@ -20,6 +23,10 @@ const DetailsView = () => {
 
   useEffect(() => {
     dispatch(fetchCountryByName(name))
+    
+    return () => {
+      dispatch(resetToInitialState())
+    }
   }, [dispatch, name])
 
   return (
