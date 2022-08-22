@@ -1,17 +1,23 @@
-import React, { FC, useState, useEffect } from 'react';
-import { IoMoon, IoMoonOutline } from 'react-icons/io5';
+import React, { FC, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { selectTheme } from '../../store/selectors';
 
+import { IoMoon, IoMoonOutline } from 'react-icons/io5';
 import { SContainer } from '../container/SContainer'
 import { SHeader, SHeaderWrapper, STitle, SThemeSwitcher } from './styled-header';
+import { switchTheme } from '../../store/reducers/theme';
 
 const Header: FC = () => {
-  const [theme, setTheme] = useState('light')
+  const dispatch = useAppDispatch()
+  const { themeType } = useAppSelector(selectTheme)
 
   useEffect(() => {
-    document.body.setAttribute('data-theme', theme)
-  }, [theme])
+    document.body.setAttribute('data-theme', themeType)
+  }, [themeType])
 
-  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light')
+  const toggleTheme = () => {
+    dispatch(switchTheme())
+  }
 
   return (
     <SHeader>
@@ -19,11 +25,11 @@ const Header: FC = () => {
         <SHeaderWrapper>
           <STitle>Where in the world?</STitle>
           <SThemeSwitcher onClick={toggleTheme}>
-            {theme === 'light'
+            {themeType === 'light'
             ? <IoMoonOutline size='14px'/>
             : <IoMoon size='14px'/>
             }{' '}
-            <span style={{marginLeft: '0.75rem'}}>{theme} Theme</span>
+            <span style={{marginLeft: '0.75rem'}}>{themeType} Theme</span>
           </SThemeSwitcher>
         </SHeaderWrapper>
       </SContainer>
