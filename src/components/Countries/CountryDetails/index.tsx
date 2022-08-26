@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { ICountry } from '../../../models/countries';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { fetchNeighboursByCodes } from '../../../store/reducers/countryDetails/action-creators';
 import { selectCountryNeighbours } from '../../../store/selectors';
@@ -14,6 +13,7 @@ import {
   STagGroup, 
   STitle } from './styled-country-details';
 import { Loader } from '../../UI/Loader';
+import { ICountry } from '../../../models';
 
 interface CountryDetailsProps extends ICountry {
   isCountryLoading?: boolean;
@@ -23,15 +23,14 @@ interface CountryDetailsProps extends ICountry {
 
 const CountryDetails: FC<CountryDetailsProps> = ({
   name,
-  nativeName,
-  flag,
+  flags,
   capital,
   population,
   region,
   subregion,
-  topLevelDomain,
-  currencies = [],
-  languages = [],
+  tld,
+  currencies,
+  languages,
   borders = [],
   navigate,
 }) => {
@@ -42,8 +41,10 @@ const CountryDetails: FC<CountryDetailsProps> = ({
     areNeighboursLoading,
     neighboursError,
   } = useAppSelector(selectCountryNeighbours)
-
   const [neighboursNames, setNeighboursNames] = useState([] as string[])
+  const [nativeNamesCommon, setNativeNamesCommon] = useState([] as string[])
+  const [currenciesNames, setCurrenciesNames] = useState([] as string[])
+  const [languagesNames, setLanguagesNames] = useState([] as string[])
 
   useEffect(() => {
     if (!areNeighboursLoading && !neighboursError) {
@@ -54,19 +55,44 @@ const CountryDetails: FC<CountryDetailsProps> = ({
 
   useEffect(() => {
     if (neighbours.length !== 0) {
-      setNeighboursNames(neighbours.map(n => n.name))
+      setNeighboursNames(neighbours.map(n => n.name.common))
     }    
   }, [neighbours])
 
+  useEffect(() => {
+    const native = [];
+    for (const key in name.nativeName) {
+      native.push(name.nativeName[key].common)
+    }
+    setNativeNamesCommon(native)
+  }, [name.nativeName])
+
+  useEffect(() => {
+    const curr = [];
+    for (const key in currencies) {
+      curr.push(currencies[key as keyof typeof currencies]?.name);
+    }
+    setCurrenciesNames(curr as string[])
+  }, [currencies])
+
+  useEffect(() => {
+    const lang = [];
+    for (const key in languages) {
+      lang.push(languages[key]);
+    }
+    setLanguagesNames(lang);
+    
+  }, [languages])
+  
   return (
     <SDetailsWrapper>
-      <SImage src={flag} alt={name} />
+      <SImage src={flags.svg} alt={name.common} />
       <div>
-        <STitle>{name}</STitle>
+        <STitle>{name.official}</STitle>
         <SListGroup>
           <SList>
             <SListItem>
-              <b>Native Name:</b> {nativeName}
+              <b>Native Name:</b> {nativeNamesCommon.length !== 0 ? nativeNamesCommon.join(', ') : 'no native name'}
             </SListItem>
             <SListItem>
               <b>Population:</b> {population}
@@ -83,13 +109,13 @@ const CountryDetails: FC<CountryDetailsProps> = ({
           </SList>
           <SList>
             <SListItem>
-              <b>Top Level Domain:</b> {topLevelDomain?.map(d => (<span key={d}>{d}</span>))}
+              <b>Top Level Domain:</b> {tld?.map(d => (<span key={d}>{d}</span>))}
             </SListItem>
             <SListItem>
-              <b>Currency:</b> {currencies?.map(c => (<span key={c.code}>{c.name} </span>))}
+              <b>Currency:</b> {currenciesNames.length !== 0 ? currenciesNames.join(', ') : 'no currencies'}
             </SListItem>
             <SListItem>
-              <b>Languages:</b> {languages?.map(l => (<span key={l.name}>{l.name}</span>))}
+              <b>Languages:</b> {languagesNames.length !== 0 ? languagesNames.join(', ') : 'no languages'}
             </SListItem>
           </SList>
         </SListGroup>

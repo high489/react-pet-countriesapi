@@ -10,7 +10,7 @@ export interface ICountry {
   ccn3?:        string;
   cioc?:        string;
   coatOfArms:   CoatOfArms;
-  continents:   string[] | Continent[];
+  continents:   Continent[];
   currencies?:  Currencies | { [key: string]: Currency };
   demonyms?:    Demonyms;
   fifa?:        string;
@@ -26,9 +26,9 @@ export interface ICountry {
   name:         Name;
   population:   number;
   postalCode?:  PostalCode;
-  region:       Region | string;
-  startOfWeek:  StartOfWeek | string;
-  status:       Status | string;
+  region:       Region;
+  startOfWeek:  StartOfWeek;
+  status:       Status;
   subregion?:   string;
   timezones:    string[];
   tld?:         string[];

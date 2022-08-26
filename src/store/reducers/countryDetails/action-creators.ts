@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ICountry } from '../../../models/countries';
+import { ICountry } from '../../../models';
 import { BASE_URL } from '../../config';
 
 export const fetchCountryByName = 

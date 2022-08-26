@@ -1,36 +1,35 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../hooks/redux';
+import { useAppSelector, useAppDispatch } from '../hooks/redux';
+import { selectAllCountries } from '../store/selectors';
 import { fetchAllCountries } from '../store/reducers/allCountries/action-creators';
 
 import { Controls } from '../components/Controls';
 import { CountriesList } from '../components/Countries/CountriesList';
 import { Loader } from '../components/UI/Loader';
 import { CountryCard } from '../components/Countries/CountryCard';
-import { ICountry, ICountryInfo } from '../models/countries';
+import { ICountry, ICountryInfo } from '../models';
 
-interface HomeViewProps {
-  allCountries: ICountry[];
-  areAllCountriesLoading: boolean;
-  allCountriesLoadingError: string | null;
-}
-
-const HomeView: FC<HomeViewProps> = ({
-  allCountries,
-  areAllCountriesLoading,
-  allCountriesLoadingError,
-}) => {
-  const [filteredCountries, setFilteredCountries] = useState(allCountries)
-  
+const HomeView: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+
+  const {
+    data: allCountries,
+    loading: areAllCountriesLoading,
+    error: allCountriesLoadingError,
+  } = useAppSelector(selectAllCountries)  
+
+  const [filteredCountries, setFilteredCountries] = useState([] as ICountry[])
 
   useEffect(() => {
     dispatch(fetchAllCountries())
   }, [dispatch])
 
   useEffect(() => {
-    setFilteredCountries(allCountries)
+    if (allCountries.length !== 0) {
+      setFilteredCountries(allCountries)
+    }    
   }, [allCountries])
 
   const handleSearch = (search?: string, region?: any) => {
@@ -42,7 +41,7 @@ const HomeView: FC<HomeViewProps> = ({
       data = data.filter(c => c.region.includes(regionValue))
     }
     if (search) {
-      data = data.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+      data = data.filter(c => c.name.common.toLowerCase().includes(search.toLowerCase()))
     }
     setFilteredCountries(data)
   }
@@ -56,7 +55,7 @@ const HomeView: FC<HomeViewProps> = ({
       : filteredCountries.map((c) => {
           const countryInfo: ICountryInfo = {
             img: c.flags.png,
-            name: c.name,
+            name: c.name.common,
             info: [
               {
                 title: 'Population',
@@ -68,15 +67,15 @@ const HomeView: FC<HomeViewProps> = ({
               },
               {
                 title: 'Capital',
-                description: c.capital,
+                description: c.capital?.length !== 0 ? c.capital?.join(', ') : 'no capital',
               },
             ],
           }
           return (
             <CountryCard
-              key={c.name}
+              key={c.name.common}
               {...countryInfo}
-              onClick={() => navigate(`/country/${c.name}`)}
+              onClick={() => navigate(`/country/${c.name.common}`)}
             />
           )
         })}

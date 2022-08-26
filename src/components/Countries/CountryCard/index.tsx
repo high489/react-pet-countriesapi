@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ICountryInfo } from '../../../models/countries';
+import { ICountryInfo } from '../../../models';
 import { SBody, SImage, SList, SListItem, STitle, SCardWrapper } from './styled-country-card';
 
 interface CountryCardProps extends ICountryInfo {
@@ -7,7 +7,7 @@ interface CountryCardProps extends ICountryInfo {
 }
 
 const CountryCard: FC<CountryCardProps> = ({img, name, info = [], onClick}) => {
-
+  
   return (
     <SCardWrapper onClick={onClick}>
       <SImage src={img} alt={name}/>

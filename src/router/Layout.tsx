@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header } from '../Header';
-import { Main } from '../Main';
+import { Header } from '../components/Header';
+import { Main } from '../components/Main';
 
 const Layout: FC = () => {
   return (

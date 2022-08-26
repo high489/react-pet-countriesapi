@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
@@ -11,7 +11,7 @@ import { IoArrowBack } from 'react-icons/io5';
 import { Loader } from '../components/UI/Loader';
 import { CountryDetails } from '../components/Countries/CountryDetails';
 
-const DetailsView = () => {
+const DetailsView: FC = () => {
   const { name } = useParams();
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
