@@ -15,7 +15,7 @@ const countryDetailsSlice = createSlice({
   name: 'countryDetails',
   initialState,
   reducers: {
-    resetToInitialState: state => state = initialState,
+    resetCountryDetailsState: state => state = initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -46,6 +46,6 @@ const countryDetailsSlice = createSlice({
   },
 })
 
-export const { resetToInitialState } = countryDetailsSlice.actions;
+export const { resetCountryDetailsState } = countryDetailsSlice.actions;
 
 export default countryDetailsSlice.reducer;

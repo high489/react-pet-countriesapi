@@ -14,7 +14,7 @@ export const SHeaderWrapper = styled.div`
 `
 
 export const STitle = styled(Link).attrs({
-  to: '/'
+  to: '/',
 })`
   color: var(--color-text);
   font-size: var(--fs-sm);

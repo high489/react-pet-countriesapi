@@ -25,3 +25,8 @@ interface ICountryInfoItem {
   title: string;
   description?: string | string[];
 }
+
+export interface IControlsState {
+  search: string;
+  region: unknown | any | null;
+}

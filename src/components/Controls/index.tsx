@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
+
 import { Search } from './Search';
 import { RegionSelect, ISelectOption } from './RegionSelect';
 import { SControlsWrapper } from './styled-controls';
@@ -6,24 +7,20 @@ import { SControlsWrapper } from './styled-controls';
 const options: ISelectOption[] = [
   {value: 'Africa', label: 'Africa'},
   {value: 'America', label: 'America'},
+  {value: 'Antarctic', label: 'Antarctic'},
   {value: 'Asia', label: 'Asia'},
   {value: 'Europe', label: 'Europe'},
   {value: 'Oceania', label: 'Oceania'},
 ]
 
 interface ControlsProps {
-  onSearch: (search?: string | undefined, region?: any) => void;
+  search: string;
+  region: unknown;
+  setSearch: (value: string) => void;
+  setRegion: (value: unknown) => void;
 }
 
-const Controls: FC<ControlsProps> = ({onSearch}) => {
-  const [search, setSearch] = useState<string>('')
-  const [region, setRegion] = useState<unknown>()
-
-  useEffect(() => {
-    onSearch(search, region)
-    // eslint-disable-next-line
-  }, [search, region])
-  
+const Controls: FC<ControlsProps> = ({ search, region, setSearch, setRegion }) => {  
   return (
     <SControlsWrapper>
       <Search search={search} setSearch={setSearch} />

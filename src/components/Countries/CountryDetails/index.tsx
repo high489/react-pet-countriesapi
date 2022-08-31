@@ -81,7 +81,6 @@ const CountryDetails: FC<CountryDetailsProps> = ({
       lang.push(languages[key]);
     }
     setLanguagesNames(lang);
-    
   }, [languages])
   
   return (
@@ -109,7 +108,7 @@ const CountryDetails: FC<CountryDetailsProps> = ({
           </SList>
           <SList>
             <SListItem>
-              <b>Top Level Domain:</b> {tld?.map(d => (<span key={d}>{d}</span>))}
+              <b>Top Level Domain:</b> {tld?.length !== 0 ? tld?.join(', ') : 'no top level domain'}
             </SListItem>
             <SListItem>
               <b>Currency:</b> {currenciesNames.length !== 0 ? currenciesNames.join(', ') : 'no currencies'}

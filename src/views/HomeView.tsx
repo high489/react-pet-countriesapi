@@ -1,58 +1,63 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../hooks/redux';
-import { selectAllCountries } from '../store/selectors';
+import { selectFilteredCountries, selectControls } from '../store/selectors';
 import { fetchAllCountries } from '../store/reducers/allCountries/action-creators';
+import { setSearch, setRegion } from '../store/reducers/controls';
 
 import { Controls } from '../components/Controls';
 import { CountriesList } from '../components/Countries/CountriesList';
 import { Loader } from '../components/UI/Loader';
 import { CountryCard } from '../components/Countries/CountryCard';
-import { ICountry, ICountryInfo } from '../models';
+import { ICountryInfo } from '../models';
 
 const HomeView: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
+  const { search, region } = useAppSelector(selectControls)
+
+  const [searchValue, setSearchValue] = useState<string>(search)
+  const [regionValue, setRegionValue] = useState<unknown>(region)
+  
   const {
     data: allCountries,
     loading: areAllCountriesLoading,
     error: allCountriesLoadingError,
-  } = useAppSelector(selectAllCountries)  
-
-  const [filteredCountries, setFilteredCountries] = useState([] as ICountry[])
+  } = useAppSelector(state => selectFilteredCountries(state, {search, region}))
 
   useEffect(() => {
     dispatch(fetchAllCountries())
   }, [dispatch])
 
   useEffect(() => {
-    if (allCountries.length !== 0) {
-      setFilteredCountries(allCountries)
-    }    
-  }, [allCountries])
+    dispatch(setSearch(searchValue))
+  }, [dispatch, searchValue])
 
-  const handleSearch = (search?: string, region?: any) => {
-    let data = [...allCountries]
+  useEffect(() => {
+    dispatch(setRegion(regionValue))
+  }, [dispatch, regionValue])
 
-    const regionValue = region?.value || ''    
-    
-    if (regionValue) {
-      data = data.filter(c => c.region.includes(regionValue))
-    }
-    if (search) {
-      data = data.filter(c => c.name.common.toLowerCase().includes(search.toLowerCase()))
-    }
-    setFilteredCountries(data)
-  }
+  useEffect(() => {  
+    setSearchValue(search)
+  }, [search])
+
+  useEffect(() => {  
+    setRegionValue(region)
+  }, [region])
 
   return (
     <>
-     <Controls onSearch={handleSearch} />
+     <Controls 
+      search={searchValue}
+      region={regionValue}
+      setSearch={setSearchValue}
+      setRegion={setRegionValue}
+    />
      <CountriesList>
       {areAllCountriesLoading 
       ? <Loader />
-      : filteredCountries.map((c) => {
+      : allCountries.map((c) => {
           const countryInfo: ICountryInfo = {
             img: c.flags.png,
             name: c.name.common,

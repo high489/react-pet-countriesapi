@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 import { fetchCountryByName } from '../store/reducers/countryDetails/action-creators';
 import { selectCountryDetails } from '../store/selectors';
-import { resetToInitialState } from '../store/reducers/countryDetails';
+import { resetCountryDetailsState } from '../store/reducers/countryDetails';
 
 import { MyButton } from '../components/UI';
 import { IoArrowBack } from 'react-icons/io5';
@@ -26,7 +26,7 @@ const DetailsView: FC = () => {
     dispatch(fetchCountryByName(name))
     
     return () => {
-      dispatch(resetToInitialState())
+      dispatch(resetCountryDetailsState())
     }
   }, [dispatch, name])
 
